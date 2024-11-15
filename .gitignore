@@ -1,3 +1,5 @@
 venv/
 
 aimodels/
+
+__pycache__/
