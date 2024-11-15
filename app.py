@@ -2,6 +2,7 @@ from fastapi import FastAPI, Request
 from pydantic import BaseModel
 from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline
 
+#AI App
 # Initialize the FastAPI app
 app = FastAPI()
 
@@ -21,6 +22,7 @@ class TextGenerationRequest(BaseModel):
     max_length: int = 50
 
 # Define an endpoint to generate text
+
 @app.post("/generate-text")
 async def generate_text(request: TextGenerationRequest):
     # Use the pipeline to generate text and explicitly set pad_token_id
