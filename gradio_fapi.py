@@ -13,18 +13,21 @@ model = AutoModelForCausalLM.from_pretrained(
 # Define the text generation function
 
 
-def generate_text(prompt, max_length=50):
+def generate_text(prompt, max_length=13000):
     inputs = tokenizer(prompt, return_tensors="pt")
     outputs = model.generate(
-        inputs["input_ids"], max_length=max_length, pad_token_id=tokenizer.eos_token_id)
+        # Lower temperature increases randomness
+        inputs["input_ids"], max_length=max_length,     temperature=0.7,
+        top_k=50,repetition_penalty=1.2,
+        top_p=0.9, pad_token_id=tokenizer.eos_token_id)
     return tokenizer.decode(outputs[0], skip_special_tokens=True)
 
 
 # Create the Gradio interface
 gradio_interface = gr.Interface(
     fn=generate_text,
-    inputs=[gr.Textbox(lines=2, placeholder="Enter your prompt here..."), gr.Slider(
-        10, 100, step=10, value=50, label="Max Length")],
+    inputs=[gr.Textbox(lines=10, placeholder="Enter your prompt here..."), gr.Slider(
+        10, 1000, step=50, value=50, label="Max Length")],
     outputs="text",
     title="GPT-2 Text Generator"
 )

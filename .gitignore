@@ -3,3 +3,7 @@ venv/
 aimodels/
 
 __pycache__/
+
+env_gradio/
+
+.gradio/
